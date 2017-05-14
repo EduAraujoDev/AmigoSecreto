@@ -22,13 +22,13 @@ public class Usuario implements Serializable {
 	@Column(name = "usu_codigo")
 	private Integer codigo;
 
-	@Column(name = "usu_nome", length = 100)
+	@Column(name = "usu_nome", length = 20)
 	private String nome;
 
-	@Column(name = "usu_cfp", length = 12)
-	private String cpf;
+	@Column(name = "login", length = 20)
+	private String login;
 
-	@Column(name = "usu_senha", length = 15)
+	@Column(name = "usu_senha", length = 20)
 	private String senha;
 
 	@Column(name = "usu_sorteado")
@@ -54,12 +54,12 @@ public class Usuario implements Serializable {
 		this.nome = nome;
 	}
 
-	public String getCpf() {
-		return cpf;
+	public String getLogin() {
+		return login;
 	}
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+	public void setLogin(String login) {
+		this.login = login;
 	}
 
 	public String getSenha() {
