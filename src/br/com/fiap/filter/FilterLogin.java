@@ -38,8 +38,6 @@ public class FilterLogin implements Filter{
         HttpSession session = ((HttpServletRequest) request).getSession();
 		Usuario usuario = (Usuario) session.getAttribute("session_usuario");
 		
-		System.out.println(req.getServletPath());
-		
 		if (usuario == null) {
 			if (req.getServletPath().equals("/")) {
 				dispatcher.forward(request, response);
