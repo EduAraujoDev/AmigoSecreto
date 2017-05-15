@@ -16,34 +16,33 @@ import javax.persistence.Table;
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "usu_codigo")
-	private Integer codigo;
+	private Integer id;
 
-	@Column(name = "usu_nome", length = 20)
+	@Column(length = 20)
 	private String nome;
 
-	@Column(name = "login", length = 20)
+	@Column(length = 20)
 	private String login;
 
-	@Column(name = "usu_senha", length = 20)
+	@Column(length = 20)
 	private String senha;
 
-	@Column(name = "usu_sorteado")
-	private Integer sorteado;
+	@Column(length = 1)
+	private String autorizado;
 
 	@ManyToOne
 	@JoinColumn(name="usu_grupo")
 	private Grupo grupo;
-	
-	public Integer getCodigo() {
-		return codigo;
+
+	public Integer getId() {
+		return id;
 	}
 
-	public void setCodigo(Integer codigo) {
-		this.codigo = codigo;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -70,12 +69,12 @@ public class Usuario implements Serializable {
 		this.senha = senha;
 	}
 
-	public Integer getSorteado() {
-		return sorteado;
+	public String getAutorizado() {
+		return autorizado;
 	}
 
-	public void setSorteado(Integer sorteado) {
-		this.sorteado = sorteado;
+	public void setAutorizado(String autorizado) {
+		this.autorizado = autorizado;
 	}
 
 	public Grupo getGrupo() {
@@ -85,5 +84,5 @@ public class Usuario implements Serializable {
 	public void setGrupo(Grupo grupo) {
 		this.grupo = grupo;
 	}
-
+	
 }

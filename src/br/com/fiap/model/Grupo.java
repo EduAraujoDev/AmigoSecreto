@@ -37,8 +37,7 @@ public class Grupo implements Serializable {
 
 	@Column(name = "gru_final")
 	private Date dataFinal;
-
-	//@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "Grupo")
+	
 	@OneToMany(mappedBy = "grupo", targetEntity = Usuario.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Usuario> usuarios = new LinkedHashSet<Usuario>();
 

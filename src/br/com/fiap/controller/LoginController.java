@@ -12,6 +12,9 @@ import br.com.fiap.model.Usuario;
 @Controller
 public class LoginController {
 	
+	private UsuarioDAO usuarioDAO;
+	private Usuario usuario;
+	
 	@RequestMapping("/")
 	public String login() {
 		return "login";
@@ -24,21 +27,43 @@ public class LoginController {
 	
 	@RequestMapping(value="/efetuaLogin", method=RequestMethod.POST)
 	public String efetuaLogin(@RequestParam("login") String login, @RequestParam("senha") String senha, ModelMap model) {
-		UsuarioDAO usuarioDAO = new UsuarioDAO();
-		Usuario usuario = usuarioDAO.buscarUsuario(login, senha);
+		
+		String retorno = "login";
+		
+		usuarioDAO = new UsuarioDAO();
+		usuario = usuarioDAO.buscarUsuario(login, senha);
 		
 		if (usuario == null) {
-			model.addAttribute("erroLogin", "Usuário: '" + login + "' não existe!");			
+			model.addAttribute("erroLogin", "Usuário: '" + login + "' não existe!");
 		} else {
-			model.addAttribute("erroLogin", "Usuário: '" + login + "' existe!");
+			if (usuario.getAutorizado().equals("N")){
+				model.addAttribute("erroLogin", "Usuário: '" + login + "' autorizado!");
+			}
 		}
 		
-		return "login";
+		return retorno;
 	}
 	
 	@RequestMapping(value="/novoUsuario", method=RequestMethod.POST)
-	public String novoUsuario(ModelMap model) {
-		model.addAttribute("novoLogin", "Usuário incluído!");
+	public String novoUsuario(Usuario usuario, @RequestParam("confirmarSenha") String confirmarSenha, ModelMap model) {
+		
+		if (!usuario.getSenha().equals(confirmarSenha)) {
+			model.addAttribute("senhaError", "Senhas diferentes!");
+			
+			return "cadastraUsuario";
+		}
+		
+		try {
+			usuario.setAutorizado("N");
+			
+			usuarioDAO = new UsuarioDAO();
+			usuarioDAO.adicionar(usuario);
+			
+			model.addAttribute("novoLogin", "Usuário incluído!");
+		} catch (Exception e) {
+			model.addAttribute("erroLogin", e.getMessage());
+			e.printStackTrace();
+		}
 		
 		return "login";
 	}
