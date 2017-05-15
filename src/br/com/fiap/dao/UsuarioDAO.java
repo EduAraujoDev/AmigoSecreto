@@ -34,6 +34,7 @@ public class UsuarioDAO extends GenericDao<Usuario> {
 			usuario.setNome("Administrador");
 			usuario.setLogin("admin");
 			usuario.setSenha("admin");
+			usuario.setAutorizado("S");
 			
 			this.adicionar(usuario);
 		}

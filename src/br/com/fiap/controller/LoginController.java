@@ -1,5 +1,8 @@
 package br.com.fiap.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +29,8 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/efetuaLogin", method=RequestMethod.POST)
-	public String efetuaLogin(@RequestParam("login") String login, @RequestParam("senha") String senha, ModelMap model) {
+	public String efetuaLogin(@RequestParam("login") String login, @RequestParam("senha") String senha, ModelMap model,
+			HttpServletRequest request) {
 		
 		String retorno = "login";
 		
@@ -36,8 +40,17 @@ public class LoginController {
 		if (usuario == null) {
 			model.addAttribute("erroLogin", "Usuário: '" + login + "' não existe!");
 		} else {
-			if (usuario.getAutorizado().equals("N")){
-				model.addAttribute("erroLogin", "Usuário: '" + login + "' autorizado!");
+			if (usuario.getAutorizado().equals("N") && !usuario.getLogin().equals("admin")){
+				model.addAttribute("erroLogin", "Usuário: '" + login + "' não autorizado, favor entrar em contato com o Administrador!");
+			} else {
+				HttpSession session = request.getSession();
+				session.setAttribute("session_usuario", usuario);
+				
+				if (usuario.getLogin().equals("admin")) {
+					retorno = "/admin/paginaAdmin";
+				} else {
+					retorno = "/usuario/paginaUsuario";
+				}
 			}
 		}
 		

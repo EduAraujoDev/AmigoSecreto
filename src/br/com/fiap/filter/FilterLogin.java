@@ -11,6 +11,10 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import br.com.fiap.model.Usuario;
 
 @WebFilter("/*")
 public class FilterLogin implements Filter{
@@ -30,9 +34,16 @@ public class FilterLogin implements Filter{
 		
         HttpServletRequest req = (HttpServletRequest) request;
         RequestDispatcher dispatcher = req.getRequestDispatcher("/");
+        
+        HttpSession session = ((HttpServletRequest) request).getSession();
+		Usuario usuario = (Usuario) session.getAttribute("session_usuario");
 		
-		if (req.getServletPath().equals("/")) {
-			dispatcher.forward(request, response);			
+		System.out.println(req.getServletPath());
+		
+		if (usuario == null) {
+			if (req.getServletPath().equals("/")) {
+				dispatcher.forward(request, response);
+			}
 		}
 		
 		chain.doFilter(request, response);
