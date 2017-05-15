@@ -35,7 +35,7 @@ public class FilterLogin implements Filter{
         HttpServletRequest req = (HttpServletRequest) request;
         RequestDispatcher dispatcher = req.getRequestDispatcher("/");
         
-        HttpSession session = ((HttpServletRequest) request).getSession();
+        HttpSession session = req.getSession();
 		Usuario usuario = (Usuario) session.getAttribute("session_usuario");
 		
 		if (usuario == null) {

@@ -49,6 +49,11 @@ public class LoginController {
 				if (usuario.getLogin().equals("admin")) {
 					retorno = "/admin/paginaAdmin";
 				} else {
+					if (usuario.getGrupo() == null) {
+						model.addAttribute("sorteioMsg", "Não houve sorteio!");
+					}
+					
+					model.addAttribute("grupo", usuario.getGrupo());
 					retorno = "/usuario/paginaUsuario";
 				}
 			}
