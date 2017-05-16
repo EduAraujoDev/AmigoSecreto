@@ -29,6 +29,9 @@ public class Usuario implements Serializable {
 
 	@Column(length = 20)
 	private String senha;
+	
+	@Column(name = "sorteado")
+	private Integer sorteado;
 
 	@Column(length = 1)
 	private String autorizado;
@@ -67,6 +70,14 @@ public class Usuario implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public Integer getSorteado() {
+		return sorteado;
+	}
+
+	public void setSorteado(Integer sorteado) {
+		this.sorteado = sorteado;
 	}
 
 	public String getAutorizado() {

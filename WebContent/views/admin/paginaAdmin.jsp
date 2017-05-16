@@ -15,6 +15,7 @@
 			<c:if test="${not empty usuarioAtivo}">
 				<div class="alert alert-success" role="alert"><strong>Atenção!</strong> ${usuarioAtivo}</div>
 			</c:if>
+			<a href=<c:url value="/admin/realizaSorteio"/>>Realizar Sorteio</a>
 			<jsp:useBean id="usuarios" class="br.com.fiap.bean.UsuariosBean"/>
 			<table class="table table-striped">
 				<thead>

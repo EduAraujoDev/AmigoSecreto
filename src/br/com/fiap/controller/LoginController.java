@@ -49,11 +49,14 @@ public class LoginController {
 				if (usuario.getLogin().equals("admin")) {
 					retorno = "/admin/paginaAdmin";
 				} else {
-					if (usuario.getGrupo() == null) {
+					if (usuario.getSorteado() == null) {
 						model.addAttribute("sorteioMsg", "Não houve sorteio!");
+					} else {
+						usuarioDAO = new UsuarioDAO();
+						Usuario usuarioRet = usuarioDAO.buscar(usuario.getSorteado());
+						model.addAttribute("sorteioMsg", "Seu amigo secreto é: " + usuarioRet.getNome() );
 					}
 					
-					model.addAttribute("grupo", usuario.getGrupo());
 					retorno = "/usuario/paginaUsuario";
 				}
 			}
